@@ -3,6 +3,8 @@
 `gwt` is a shell function for quickly switching Git worktrees.
 It changes the current directory to the worktree for a branch.
 
+> **Note**: This project is still under development and is not a finished product.
+
 ```
 Usage:
   gwt <branch>
