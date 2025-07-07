@@ -1,16 +1,14 @@
 # gwt
 
-`gwt` is a tiny **shell script** for managing Git worktrees. It can list existing worktrees,
-print the path of a worktree for quick switching, and add new worktrees.
+`gwt` is a tiny **shell script** for managing Git worktrees. It prints the path of a worktree
+for quick switching.
 
 ```
 Usage:
-  gwt list
-  gwt switch <branch>
-  gwt <branch> <path>
+  gwt <branch>
 ```
 
-Use `cd $(gwt switch <branch>)` to change directories quickly.
+Use `cd $(gwt <branch>)` to change directories quickly.
 
 ## Installation
 
