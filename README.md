@@ -19,7 +19,13 @@ curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt.sh -o ~/bin/
 chmod +x ~/bin/gwt
 ```
 
-Adjust the destination as needed and ensure the directory is in your `PATH`.
+You can also install it in one step with `install`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt.sh | install -m 755 /usr/local/bin/gwt
+```
+
+Adjust the destination path as needed and ensure the directory is in your `PATH`.
 
 ## Shell helper
 
