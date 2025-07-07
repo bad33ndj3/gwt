@@ -1,6 +1,6 @@
 # gwt
 
-`gwt` is a tiny helper for managing Git worktrees. It can list existing worktrees,
+`gwt` is a tiny **shell script** for managing Git worktrees. It can list existing worktrees,
 print the path of a worktree for quick switching, and add new worktrees.
 
 ```
@@ -14,11 +14,31 @@ Use `cd $(gwt switch <branch>)` to change directories quickly.
 
 ## Installation
 
-You can install the command directly from the repository using `go install`:
+Download the script somewhere on your `PATH` and make it executable:
 
 ```bash
-go install github.com/bad33ndj3/gwt@latest
+curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt.sh -o ~/bin/gwt
+chmod +x ~/bin/gwt
 ```
 
-Make sure `$GOBIN` (or `$GOPATH/bin`) is in your `PATH` so the `gwt` binary is
-available.
+Adjust the destination as needed and ensure the directory is in your `PATH`.
+
+## Shell helper
+
+To quickly switch worktrees from your shell, a helper script is provided. Append
+it to your shell configuration so the `gwtcd` function is available. If you have the repository cloned, you can append the file directly:
+
+```bash
+cat gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
+
+# If you downloaded only the script, fetch the helper from the repository:
+curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
+```
+
+Reload your shell or source the file to start using it.
+
+The helper defines:
+
+```bash
+gwtcd <branch>   # cd into the worktree for <branch>
+```
