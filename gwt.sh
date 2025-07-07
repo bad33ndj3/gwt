@@ -3,24 +3,11 @@ set -euo pipefail
 
 usage() {
     cat <<USAGE
-Usage:
-  gwt list
-  gwt switch <branch>
-  gwt <branch> <path>
+Usage: gwt <branch>
 USAGE
 }
 
 
-list_worktrees() {
-    git worktree list --porcelain | awk '
-        /^worktree / {
-            path = substr($0, 10);
-            getline; getline;
-            branch = substr($0, 8);
-            sub(/^refs\/heads\//, "", branch);
-            printf "%-20s %s\n", branch, path;
-        }'
-}
 
 find_worktree() {
     local branch="$1"
@@ -40,46 +27,18 @@ find_worktree() {
     '
 }
 
-add_worktree() {
-    local branch="$1" path="$2"
-    if [[ -d "$path/.git" ]]; then
-        echo "worktree already exists at $path" >&2
-        return 1
-    fi
-    echo "Adding worktree for branch $branch at $path"
-    git worktree add "$path" "$branch"
-}
-
 main() {
-    if [[ $# -lt 1 ]]; then
+    if [[ $# -ne 1 ]]; then
         usage >&2
         exit 1
     fi
 
-    case "$1" in
-        list)
-            list_worktrees
-            ;;
-        switch)
-            if [[ $# -ne 2 ]]; then
-                echo "Usage: gwt switch <branch>" >&2
-                exit 1
-            fi
-            if path=$(find_worktree "$2"); then
-                echo "$path"
-            else
-                echo "Error: no worktree for branch $2" >&2
-                exit 1
-            fi
-            ;;
-        *)
-            if [[ $# -ne 2 ]]; then
-                usage >&2
-                exit 1
-            fi
-            add_worktree "$1" "$2"
-            ;;
-    esac
+    if path=$(find_worktree "$1"); then
+        echo "$path"
+    else
+        echo "Error: no worktree for branch $1" >&2
+        exit 1
+    fi
 }
 
 main "$@"
