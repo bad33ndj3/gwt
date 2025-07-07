@@ -26,8 +26,7 @@ available.
 ## Shell helper
 
 To quickly switch worktrees from your shell, a helper script is provided. Append
-it to your shell configuration so the `gwtcd` function and `gwtls` alias are
-available. If you have the repository cloned, you can append the file directly:
+it to your shell configuration so the `gwtcd` function is available. If you have the repository cloned, you can append the file directly:
 
 ```bash
 cat gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
@@ -43,5 +42,4 @@ The helper defines:
 
 ```bash
 gwtcd <branch>   # cd into the worktree for <branch>
-gwtls            # shorthand for 'gwt list'
 ```

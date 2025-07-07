@@ -6,6 +6,4 @@ function gwtcd() {
     cd "$(gwt switch "$1")"
 }
 
-# Alias for listing worktrees
-alias gwtls='gwt list'
 
