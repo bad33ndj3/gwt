@@ -23,3 +23,8 @@ source ~/.gwt.sh
 ```
 
 Reload your shell and run `gwt <branch>` to jump to that worktree.
+
+### Tab Completion
+
+When sourced, `gwt.sh` now installs a Bash completion function. Press `Tab`
+after typing `gwt` to see available branches that already have worktrees.
