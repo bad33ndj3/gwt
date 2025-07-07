@@ -16,8 +16,14 @@ branch refs/heads/feature
 `
 
 func TestFindWorktree(t *testing.T) {
-	os.Setenv("GWT_WORKTREE_LIST", sampleWorktreeOutput)
-	defer os.Unsetenv("GWT_WORKTREE_LIST")
+	if err := os.Setenv("GWT_WORKTREE_LIST", sampleWorktreeOutput); err != nil {
+		t.Fatalf("failed to set env: %v", err)
+	}
+	defer func() {
+		if err := os.Unsetenv("GWT_WORKTREE_LIST"); err != nil {
+			t.Fatalf("failed to unset env: %v", err)
+		}
+	}()
 
 	path, err := findWorktree("feature")
 	if err != nil {
@@ -29,14 +35,24 @@ func TestFindWorktree(t *testing.T) {
 }
 
 func TestListWorktrees(t *testing.T) {
-	os.Setenv("GWT_WORKTREE_LIST", sampleWorktreeOutput)
-	defer os.Unsetenv("GWT_WORKTREE_LIST")
+	if err := os.Setenv("GWT_WORKTREE_LIST", sampleWorktreeOutput); err != nil {
+		t.Fatalf("failed to set env: %v", err)
+	}
+	defer func() {
+		if err := os.Unsetenv("GWT_WORKTREE_LIST"); err != nil {
+			t.Fatalf("failed to unset env: %v", err)
+		}
+	}()
 
 	tmp, err := os.CreateTemp("", "stdout")
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(tmp.Name())
+	defer func() {
+		if err := os.Remove(tmp.Name()); err != nil {
+			t.Fatalf("failed to remove temp file: %v", err)
+		}
+	}()
 	old := os.Stdout
 	os.Stdout = tmp
 	defer func() { os.Stdout = old }()
@@ -44,7 +60,9 @@ func TestListWorktrees(t *testing.T) {
 	if err := listWorktrees(); err != nil {
 		t.Fatalf("listWorktrees returned error: %v", err)
 	}
-	os.Stdout.Close()
+	if err := os.Stdout.Close(); err != nil {
+		t.Fatal(err)
+	}
 	data, err := os.ReadFile(tmp.Name())
 	if err != nil {
 		t.Fatal(err)
