@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
+# shellcheck shell=bash
 set -euo pipefail
 
-usage() {
-    cat <<USAGE
-Usage: gwt <branch>
-USAGE
-}
+# gwt - change to the worktree for the given branch
+# Source this file in your shell configuration to use the function.
 
+gwt() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: gwt <branch>" >&2
+        return 1
+    fi
 
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "Error: Not a git repository" >&2
+        return 1
+    fi
 
-find_worktree() {
     local branch="$1"
-    git worktree list --porcelain | awk -v target="$branch" '
+    local path
+    path=$(git worktree list --porcelain | awk -v target="$branch" '
         /^worktree / {
             path = substr($0, 10);
             getline; getline;
@@ -19,31 +26,20 @@ find_worktree() {
             sub(/^refs\/heads\//, "", br);
             if (br == target) {
                 print path;
-                found=1;
+                found = 1;
                 exit;
             }
         }
         END { if (!found) exit 1 }
-    '
+    ') || {
+        echo "Error: no worktree for branch $branch" >&2
+        return 1
+    }
+
+    cd "$path" || return
 }
 
-main() {
-    if [[ $# -ne 1 ]]; then
-        usage >&2
-        exit 1
-    fi
-
-    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "Error: Not a git repository" >&2
-        exit 1
-    fi
-
-    if path=$(find_worktree "$1"); then
-        echo "$path"
-    else
-        echo "Error: no worktree for branch $1" >&2
-        exit 1
-    fi
-}
-
-main "$@"
+# Allow execution as a script for backward compatibility
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    gwt "$@"
+fi
