@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
-set -euo pipefail
+# Enable strict mode only when executed directly, not when sourced
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    set -euo pipefail
+fi
 
 # gwt - change to the worktree for the given branch
 # Source this file in your shell configuration to use the function.
