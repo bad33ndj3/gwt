@@ -42,6 +42,20 @@ gwt() {
     cd "$path" || return
 }
 
+# Autocomplete branch names with existing worktrees
+__gwt_complete() {
+    local cur branches
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        branches=$(git worktree list --porcelain 2>/dev/null | awk '/^branch /{sub("^refs\/heads/","",$2); print $2}')
+        COMPREPLY=( $(compgen -W "$branches" -- "$cur") )
+    else
+        COMPREPLY=()
+    fi
+}
+
+complete -o default -F __gwt_complete gwt
+
 # Allow execution as a script for backward compatibility
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
     gwt "$@"
