@@ -39,6 +39,10 @@ cat gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
 curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
 ```
 
+Make sure the `gwt` script is installed and on your `PATH` before sourcing
+`gwt_shell.sh`. If you saved the script as `gwt.sh`, rename it to `gwt` so the
+helper can find it.
+
 Reload your shell or source the file to start using it.
 
 The helper defines:
