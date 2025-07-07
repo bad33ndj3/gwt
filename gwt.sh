@@ -33,6 +33,11 @@ main() {
         exit 1
     fi
 
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "Error: Not a git repository" >&2
+        exit 1
+    fi
+
     if path=$(find_worktree "$1"); then
         echo "$path"
     else
