@@ -37,10 +37,19 @@ To quickly switch worktrees from your shell, a helper script is provided. Append
 it to your shell configuration so the `gwtcd` function is available. If you have the repository cloned, you can append the file directly:
 
 ```bash
-cat gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
+cat gwt_shell.sh >> ~/.bashrc
 
 # If you downloaded only the script, fetch the helper from the repository:
-curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt_shell.sh >> ~/.bashrc   # or ~/.zshrc
+curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt_shell.sh >> ~/.bashrc
+```
+
+If you use zsh, you can copy these lines directly into your `~/.zshrc`:
+
+```zsh
+cat gwt_shell.sh >> ~/.zshrc
+
+# If you downloaded only the script, fetch the helper from the repository:
+curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt_shell.sh >> ~/.zshrc
 ```
 
 Make sure the `gwt` script is installed and on your `PATH` before sourcing
