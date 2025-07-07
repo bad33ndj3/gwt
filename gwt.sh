@@ -10,17 +10,9 @@ Usage:
 USAGE
 }
 
-# worktree_list prints `git worktree list` output or uses GWT_WORKTREE_LIST if set
-worktree_list() {
-    if [[ -n ${GWT_WORKTREE_LIST:-} ]]; then
-        printf '%s' "$GWT_WORKTREE_LIST"
-    else
-        git worktree list --porcelain
-    fi
-}
 
 list_worktrees() {
-    worktree_list | awk '
+    git worktree list --porcelain | awk '
         /^worktree / {
             path = substr($0, 10);
             getline; getline;
@@ -32,7 +24,7 @@ list_worktrees() {
 
 find_worktree() {
     local branch="$1"
-    worktree_list | awk -v target="$branch" '
+    git worktree list --porcelain | awk -v target="$branch" '
         /^worktree / {
             path = substr($0, 10);
             getline; getline;
