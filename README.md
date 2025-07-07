@@ -12,17 +12,21 @@ Use `cd $(gwt <branch>)` to change directories quickly.
 
 ## Installation
 
-Download the script somewhere on your `PATH` and make it executable:
+Download the script somewhere on your `PATH` and make it executable. Create the
+directory if it doesn't already exist:
 
 ```bash
+mkdir -p ~/bin
 curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt.sh -o ~/bin/gwt
 chmod +x ~/bin/gwt
 ```
 
-You can also install it in one step with `install`:
+You can also place it directly in a system directory:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt.sh | install -m 755 /usr/local/bin/gwt
+curl -fsSL https://raw.githubusercontent.com/bad33ndj3/gwt/main/gwt.sh \
+  -o /usr/local/bin/gwt
+chmod +x /usr/local/bin/gwt
 ```
 
 Adjust the destination path as needed and ensure the directory is in your `PATH`.
